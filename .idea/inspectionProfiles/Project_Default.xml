@@ -1,0 +1,15 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="LeinPackageUpdate" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="excludeList">
+        <list>
+          <option value="org.eclipse.jetty:jetty-servlet" />
+          <option value="org.eclipse.jetty:jetty-server" />
+          <option value="org.eclipse.jetty:jetty-util" />
+          <option value="ring:ring-jetty-adapter" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
