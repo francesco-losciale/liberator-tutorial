@@ -17,7 +17,7 @@
 (def base-url (str "http://localhost:" port))
 
 (deftest test-resource
-  (let [response @(http/get (str base-url "/bar/test"))]
+  (let [response @(http/get (str base-url "/bar/test") {:as :text})]
     (testing "returns 200"
       (is (= 200 (:status response)))
       (is (= "The text is test" (:body response))))))

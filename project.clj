@@ -1,5 +1,5 @@
 (defproject liberator-tutorial "0.1.0-SNAPSHOT"
-  :dependencies [[compojure "1.6.3"]
+  :dependencies [[bidi "2.1.6"]
                  [http-kit "2.8.0-beta3"]
                  [freeport "1.0.0"]
                  [liberator "0.15.2"]

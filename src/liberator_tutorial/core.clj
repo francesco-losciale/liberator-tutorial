@@ -1,20 +1,19 @@
 (ns liberator-tutorial.core
-  (:require [compojure.core :refer [ANY defroutes]]
-            [liberator.core :refer [defresource]]
-            [ring.adapter.jetty :as ring-jetty]
-            [ring.middleware.params :refer [wrap-params]])
+  (:require [bidi.ring :refer [make-handler]]
+            [liberator.core :as liberator]
+            [ring.adapter.jetty :as ring-jetty])
   (:import (org.eclipse.jetty.server Server)))
 
-(defresource parameter [txt]
-             :available-media-types ["text/plain"]
-             :handle-ok (fn [_] (format "The text is %s" txt)))
-
-(defroutes app
-           (ANY "/bar/:txt" [txt] (parameter txt)))
+(def example-resource
+  (liberator/resource
+    :available-media-types ["text/plain"]
+    :handle-ok (fn [{:keys [request]}]
+                 (str "The text is " (get-in request [:params :txt]) ))))
 
 (def handler
-  (-> app
-      wrap-params))
+  (->
+    (make-handler
+     [["/bar/" :txt] example-resource])))
 
 (defn start-server
   [state port]
