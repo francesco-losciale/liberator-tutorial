@@ -1,6 +1,7 @@
 (ns liberator-tutorial.core
   (:require [bidi.ring :refer [make-handler]]
             [liberator.core :as liberator]
+            [liberator-tutorial.todos-resource :as todos]
             [ring.adapter.jetty :as ring-jetty])
   (:import (org.eclipse.jetty.server Server)))
 
@@ -8,12 +9,13 @@
   (liberator/resource
     :available-media-types ["text/plain"]
     :handle-ok (fn [{:keys [request]}]
-                 (str "The text is " (get-in request [:params :txt]) ))))
+                 (str "The text is " (get-in request [:params :txt])))))
 
 (def handler
   (->
     (make-handler
-     [["/bar/" :txt] example-resource])))
+      ["/" {["bar/" :txt] example-resource
+            "todos"       todos/resource}])))
 
 (defn start-server
   [state port]
