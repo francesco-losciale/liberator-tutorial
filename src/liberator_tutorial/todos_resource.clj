@@ -4,6 +4,10 @@
 
 (def resource
   (liberator/resource
+    :allowed-methods [:get :post]
     :available-media-types ["application/json"]
+    :post! (fn [context])
     :handle-ok (fn [{:keys [request]}]
-                 (json/->wire-json []))))
+                 (json/->wire-json []))
+    :handle-created (fn [context]
+                      (json/->wire-json []))))

@@ -12,3 +12,9 @@
     (testing "returns 200"
       (is (= 200 (:status response)))
       (is (= [] (json/<-wire-json (:body response)))))))
+
+(deftest can-post-todo
+  (let [response @(http/post (str server-base-url "/todos") {:body (json/->wire-json [])})]
+    (testing "returns 201"
+      (is (= 201 (:status response)))
+      (is (= [] (json/<-wire-json (:body response)))))))
