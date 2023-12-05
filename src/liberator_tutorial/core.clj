@@ -1,5 +1,5 @@
 (ns liberator-tutorial.core
-  (:require [bidi.ring :refer [make-handler]]
+  (:require [bidi.ring :as bidi]
             [liberator.core :as liberator]
             [liberator-tutorial.todos-resource :as todos]
             [ring.adapter.jetty :as ring-jetty])
@@ -13,7 +13,7 @@
 
 (def handler
   (->
-    (make-handler
+    (bidi/make-handler
       ["/" {["bar/" :txt] example-resource
             "todos"        #'todos/resource}])))
 

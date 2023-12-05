@@ -1,7 +1,7 @@
 (ns liberator-tutorial.todos-test
   (:require
-    [jason.convenience :as json]
     [clojure.test :refer :all]
+    [jason.convenience :as json]
     [liberator-tutorial.shared.fixtures :refer [running-server server-base-url]]
     [org.httpkit.client :as http]))
 
