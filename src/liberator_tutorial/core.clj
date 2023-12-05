@@ -15,7 +15,7 @@
   (->
     (make-handler
       ["/" {["bar/" :txt] example-resource
-            "todos"       todos/resource}])))
+            "todos"        #'todos/resource}])))
 
 (defn start-server
   [state port]
