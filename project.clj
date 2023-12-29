@@ -1,9 +1,11 @@
 (defproject liberator-tutorial "0.1.0-SNAPSHOT"
   :dependencies [[bidi "2.1.6"]
                  [b-social/jason "0.1.5"]
+                 [b-social/liberator-mixin "0.0.61"]
                  [http-kit "2.8.0-beta3"]
                  [freeport "1.0.0"]
                  [liberator "0.15.2"]
+                 [metosin/malli "0.13.0"]
                  [org.clojure/clojure "1.11.1"]
                  [org.eclipse.jetty/jetty-util "9.4.50.v20221201"]
                  [org.eclipse.jetty/jetty-server "9.4.50.v20221201"]
