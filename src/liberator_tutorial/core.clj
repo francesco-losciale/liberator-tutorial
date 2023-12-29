@@ -1,7 +1,7 @@
 (ns liberator-tutorial.core
   (:require [bidi.ring :as bidi]
             [liberator.core :as liberator]
-            [liberator-tutorial.todos-resource :as todos]
+            [liberator-tutorial.resources.todo-lists :as todo-lists]
             [ring.adapter.jetty :as ring-jetty])
   (:import (org.eclipse.jetty.server Server)))
 
@@ -15,7 +15,7 @@
   (->
     (bidi/make-handler
       ["/" {["bar/" :txt] example-resource
-            "todos"        #'todos/resource}])))
+            "todo-lists"        #'todo-lists/resource}])))
 
 (defn start-server
   [state port]

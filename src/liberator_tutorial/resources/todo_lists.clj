@@ -1,4 +1,4 @@
-(ns liberator-tutorial.todos-resource
+(ns liberator-tutorial.resources.todo-lists
   (:require
     [jason.convenience :as json]
     [liberator.core :as liberator]
