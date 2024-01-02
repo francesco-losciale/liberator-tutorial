@@ -1,6 +1,7 @@
 # Todo lists 
 
-This small todo list project showcases: 
+This small project showcases: 
 
 - Clojure backend API using Liberator
-- WIP
+- Stuart sierra component library
+- Malli for schema validation
