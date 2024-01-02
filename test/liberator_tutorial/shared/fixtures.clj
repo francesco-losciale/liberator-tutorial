@@ -1,13 +1,9 @@
 (ns liberator-tutorial.shared.fixtures
   (:require [clojure.test :refer :all]
-            [freeport.core :refer [get-free-port!]]
-            [liberator-tutorial.core :as core]))
+            [com.stuartsierra.component :as component]))
 
-(def port (get-free-port!))
-(def server-base-url (str "http://localhost:" port))
-
-(defn running-server [f]
-  (let [state (atom {})]
-    (core/start-server state port)
+(defn with-system-lifecycle [system-atom]
+  (fn [f]
+    (reset! system-atom (component/start-system @system-atom))
     (f)
-    (core/stop-server state)))
+    (reset! system-atom (component/stop-system @system-atom))))

@@ -3,10 +3,14 @@
     [clojure.test :refer :all]
     [jason.convenience :as json]
     [liberator-tutorial.database :as database]
-    [liberator-tutorial.shared.fixtures :refer [running-server server-base-url]]
+    [liberator-tutorial.shared.fixtures :as fixtures]
+    [liberator-tutorial.system :as system]
     [org.httpkit.client :as http]))
 
-(use-fixtures :once running-server)
+(def port 8080)
+(def server-base-url (str "http://localhost:" port))
+(def system-atom (atom (system/new-system {:port port})))
+(use-fixtures :once (fixtures/with-system-lifecycle system-atom))
 (use-fixtures :each database/in-memory-fixture)
 
 (deftest can-view-todo-lists
