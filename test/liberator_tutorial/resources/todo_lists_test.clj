@@ -2,7 +2,6 @@
   (:require
     [clojure.test :refer :all]
     [jason.convenience :as json]
-    [liberator-tutorial.database :as database]
     [liberator-tutorial.shared.fixtures :as fixtures]
     [liberator-tutorial.system :as system]
     [org.httpkit.client :as http]))
@@ -11,7 +10,7 @@
 (def server-base-url (str "http://localhost:" port))
 (def system-atom (atom (system/new-system {:port port})))
 (use-fixtures :once (fixtures/with-system-lifecycle system-atom))
-(use-fixtures :each database/in-memory-fixture)
+(use-fixtures :each (fixtures/with-empty-database system-atom))
 
 (deftest can-view-todo-lists
   (let [response @(http/get (str server-base-url "/todo-lists") {:as :text})]

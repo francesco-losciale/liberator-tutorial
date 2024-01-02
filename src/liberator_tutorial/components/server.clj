@@ -5,17 +5,19 @@
             [ring.adapter.jetty :as ring-jetty])
   (:import (org.eclipse.jetty.server Server)))
 
-(def handler
-  (->
-    (bidi/make-handler
-      ["/" {"todo-lists" #'todo-lists/resource}])))
-
-(defrecord WebServer [port handler]
+(defrecord WebServer
+  [port handler database]
   component/Lifecycle
 
   (start [component]
-    (let [^Server http-server (ring-jetty/run-jetty handler {:port port :join? false})]
-      (assoc component :http-server http-server)))
+    (let [handler (bidi/make-handler
+                    ["/" {"todo-lists"
+                          (todo-lists/resource database)}])
+          ^Server http-server (ring-jetty/run-jetty
+                                handler
+                                {:port port :join? false})]
+      (assoc component :http-server http-server
+                       :handler handler)))
 
   (stop [component]
     (let [http-server (:http-server component)]
@@ -24,4 +26,4 @@
 
 (defn new-webserver
   [port]
-  (map->WebServer {:port (or port 8080) :handler handler}))
+  (map->WebServer {:port (or port 8080)}))

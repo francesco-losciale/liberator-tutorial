@@ -1,9 +1,9 @@
 (ns liberator-tutorial.resources.todo-lists
   (:require
     [jason.convenience :as json]
-    [liberator.core :as liberator]
     [liberator-mixin.json.core :refer [with-body-parsed-as-json]]
-    [liberator-tutorial.database :as database]
+    [liberator-tutorial.components.database :as database]
+    [liberator.core :as liberator]
     [malli.core :as malli]))
 
 (def todo-list-schema
@@ -17,7 +17,7 @@
     [:map {:closed true}
      [:todos todo-list-schema]]))
 
-(def resource
+(defn resource [database]
   (liberator/resource
     (merge
       (with-body-parsed-as-json)
@@ -28,8 +28,8 @@
                                   :post (malli/validate request-body-schema (:body request))
                                   true))
        :post!                 (fn [{:keys [request]}]
-                                {:todo-list (database/add-todo-list! (:body request))})
-       :handle-ok             (fn [{:keys [request]}]
-                                (json/->wire-json (database/get-add-todo-lists)))
+                                {:todo-list (database/add-todo-list database (:body request))})
+       :handle-ok             (fn [{:keys [_]}]
+                                (json/->wire-json (database/get-add-todo-lists database)))
        :handle-created        (fn [{:keys [todo-list]}]
                                 (json/->wire-json todo-list))})))
